@@ -1,3 +1,4 @@
+import { Toast } from "@/components/Toast/toast";
 import { api } from "@/pages/api/api";
 import { LoginData, UserData } from "@/schemas/usersSchemas";
 import { useRouter } from "next/router";
@@ -24,8 +25,12 @@ export const AuthProvider = ({ children }: Props) => {
   const registerUser = (data: UserData) => {
     api
       .post("/users", data)
-      .then(() => router.push("/"))
+      .then(() => {
+        Toast({ message: "Usuário criado com sucesso", success: true });
+        router.push("/");
+      })
       .catch((err) => {
+        Toast({ message: "Informações inválidas", success: false });
         console.log(err);
       });
   };
@@ -34,12 +39,13 @@ export const AuthProvider = ({ children }: Props) => {
       .post("/login", data)
       .then((res) => {
         setCookie(null, "@TOKEN", res.data.token, {
-          path: "/"
-        })
-        localStorage.setItem("@TOKEN", res.data.token)
+          path: "/",
+        });
+        Toast({ message: "Login efetuado com sucesso", success: true });
         router.push("/dashboard");
       })
       .catch((err) => {
+        Toast({ message: "Credenciais inválidas", success: false });
         console.log(err);
       });
   };

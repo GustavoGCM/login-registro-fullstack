@@ -6,9 +6,11 @@ export interface ContactsProps {
 
 export const ContactsCard = ({ contacts }: ContactsProps) => {
   return (
-    <ul className={"grid bg  grid-cols-2 gap-4"}>
+    <>
       {
-        contacts.length > 0 ? <>
+        contacts.length > 0 ? 
+        <ul className={"grid bg  grid-cols-2 gap-4"}>
+
             {contacts.map((contact) => (
             <li
               key={contact.id}
@@ -23,9 +25,10 @@ export const ContactsCard = ({ contacts }: ContactsProps) => {
               <button className={"button "}>Excluir Contato</button>
             </li>
           ))}
-        </>:
-          <p>Adicione um contato!</p>
+        
+        </ul>:
+          <p className={"titles text-slate-400"}>Adicione um contato!</p>
       }
-    </ul>
+    </>
   );
 };
